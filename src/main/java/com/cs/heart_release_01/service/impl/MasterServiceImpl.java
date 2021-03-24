@@ -89,7 +89,7 @@ public class MasterServiceImpl implements MasterService {
         //map集合存放信息
         Map<String, String> param = new HashMap<>();
         param.put("appid", "wx0bf4467902a62fb9");
-        param.put("secret", "b6e097679dea769c3e78615bf90334b7");
+        param.put("secret", "xxxxxx");
         param.put("js_code", code);
         param.put("grant_type", "authorization_code");
         //调用自定义的doget方法，返回一个带有openid和sessionkey的string类型的结果
