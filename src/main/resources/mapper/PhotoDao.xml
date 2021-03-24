@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.heart_release_01.dao.PhotoDao">
+
+    <resultMap id="BaseResultMap" type="com.cs.heart_release_01.entity.Photo">
+        <!--@Table photo-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="cardZ" column="card_z" jdbcType="VARCHAR"/>
+        <result property="cardF" column="card_f" jdbcType="VARCHAR"/>
+        <result property="proveBook" column="prove_book" jdbcType="VARCHAR"/>
+        <result property="masterId" column="master_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, card_z, card_f, prove_book, master_id
+        from heart_release.photo
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, card_z, card_f, prove_book, master_id
+        from heart_release.photo
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, card_z, card_f, prove_book, master_id
+        from heart_release.photo
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="cardZ != null and cardZ != ''">
+                and card_z = #{cardZ}
+            </if>
+            <if test="cardF != null and cardF != ''">
+                and card_f = #{cardF}
+            </if>
+            <if test="proveBook != null and proveBook != ''">
+                and prove_book = #{proveBook}
+            </if>
+            <if test="masterId != null">
+                and master_id = #{masterId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into heart_release.photo(card_z, card_f, prove_book, master_id)
+        values (#{cardZ}, #{cardF}, #{proveBook}, #{masterId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update heart_release.photo
+        <set>
+            <if test="cardZ != null and cardZ != ''">
+                card_z = #{cardZ},
+            </if>
+            <if test="cardF != null and cardF != ''">
+                card_f = #{cardF},
+            </if>
+            <if test="proveBook != null and proveBook != ''">
+                prove_book = #{proveBook},
+            </if>
+            <if test="masterId != null">
+                master_id = #{masterId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from heart_release.photo where id = #{id}
+    </delete>
+
+</mapper>

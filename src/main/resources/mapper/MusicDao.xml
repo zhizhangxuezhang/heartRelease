@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.heart_release_01.dao.MusicDao">
+
+    <resultMap id="BaseResultMap" type="com.cs.heart_release_01.entity.Music">
+        <!--@Table music-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="mpThreeUrl" column="mp_three_url" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, mp_three_url, author, name
+        from heart_release.music
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, mp_three_url, author, name
+        from heart_release.music
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, mp_three_url, author, name
+        from heart_release.music
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="mpThreeUrl != null and mpThreeUrl != ''">
+                and mp_three_url = #{mpThreeUrl}
+            </if>
+            <if test="author != null and author != ''">
+                and author = #{author}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+    <select id="queryAllJust" resultMap="BaseResultMap">
+        select
+          id, mp_three_url, author, name
+        from heart_release.music
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into heart_release.music(mp_three_url, author, name)
+        values (#{mpThreeUrl}, #{author}, #{name})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update heart_release.music
+        <set>
+            <if test="mpThreeUrl != null and mpThreeUrl != ''">
+                mp_three_url = #{mpThreeUrl},
+            </if>
+            <if test="author != null and author != ''">
+                author = #{author},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from heart_release.music where id = #{id}
+    </delete>
+
+</mapper>

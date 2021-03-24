@@ -1,0 +1,5 @@
+alioss:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  accessKeyId: LTAI4GAC53Z11Pwhvm4Az68L
+  accessKeySecret: M3nqJTb5ad7Mhdeo26Dl1RfIueQRFq
+  bucketName: heart123

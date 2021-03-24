@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.heart_release_01.dao.OrderDao">
+
+    <resultMap id="BaseResultMap" type="com.cs.heart_release_01.entity.Order">
+        <!--@Table order-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="appointmentTime" column="appointment_time" jdbcType="VARCHAR"/>
+        <result property="payMoney" column="pay_money" jdbcType="OTHER"/>
+        <result property="consultWay" column="consult_way" jdbcType="VARCHAR"/>
+        <result property="appointmentPlace" column="appointment_place" jdbcType="VARCHAR"/>
+        <result property="orderState" column="order_state" jdbcType="INTEGER"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+        <result property="masterId" column="master_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, appointment_time, pay_money, consult_way, appointment_place, order_state, time, master_id, user_id
+        from heart_release.order
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, appointment_time, pay_money, consult_way, appointment_place, order_state, time, master_id, user_id
+        from heart_release.order
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, appointment_time, pay_money, consult_way, appointment_place, order_state, time, master_id, user_id
+        from heart_release.order
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="appointmentTime != null and appointmentTime != ''">
+                and appointment_time = #{appointmentTime}
+            </if>
+            <if test="payMoney != null">
+                and pay_money = #{payMoney}
+            </if>
+            <if test="consultWay != null and consultWay != ''">
+                and consult_way = #{consultWay}
+            </if>
+            <if test="appointmentPlace != null and appointmentPlace != ''">
+                and appointment_place = #{appointmentPlace}
+            </if>
+            <if test="orderState != null">
+                and order_state = #{orderState}
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+            <if test="masterId != null">
+                and master_id = #{masterId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into heart_release.order(appointment_time, pay_money, consult_way, appointment_place, order_state, time, master_id, user_id)
+        values (#{appointmentTime}, #{payMoney}, #{consultWay}, #{appointmentPlace}, #{orderState}, #{time}, #{masterId}, #{userId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update heart_release.order
+        <set>
+            <if test="appointmentTime != null and appointmentTime != ''">
+                appointment_time = #{appointmentTime},
+            </if>
+            <if test="payMoney != null">
+                pay_money = #{payMoney},
+            </if>
+            <if test="consultWay != null and consultWay != ''">
+                consult_way = #{consultWay},
+            </if>
+            <if test="appointmentPlace != null and appointmentPlace != ''">
+                appointment_place = #{appointmentPlace},
+            </if>
+            <if test="orderState != null">
+                order_state = #{orderState},
+            </if>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+            <if test="masterId != null">
+                master_id = #{masterId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from heart_release.order where id = #{id}
+    </delete>
+
+</mapper>
