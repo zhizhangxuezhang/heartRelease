@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
         //map集合存放信息
         Map<String, String> param = new HashMap<>();
         param.put("appid", "wx0bf4467902a62fb9");
-        param.put("secret", "b6e097679dea769c3e78615bf90334b7");
+        param.put("secret", "xxxxxxxxxxx");
         param.put("js_code", code);
         param.put("grant_type", "authorization_code");
 
